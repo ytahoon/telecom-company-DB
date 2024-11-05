@@ -1,0 +1,52 @@
+DELIMITER $$
+
+CREATE PROCEDURE createAllTables()
+BEGIN
+    -- Table: Customer_profile
+    CREATE TABLE IF NOT EXISTS Customer_profile (
+        nationalID INT PRIMARY KEY,
+        first_name VARCHAR(50),
+        last_name VARCHAR(50),
+        email VARCHAR(50),
+        address VARCHAR(50),
+        date_of_birth DATE
+    );
+
+    -- Table: Customer_Account
+    CREATE TABLE IF NOT EXISTS Customer_Account (
+        mobileNo CHAR(11) PRIMARY KEY,
+        pass VARCHAR(50),
+        balance DECIMAL(10, 1),
+        account_type VARCHAR(50),
+        start_date DATE,
+        status VARCHAR(50),
+        point INT,
+        nationalID INT,
+        FOREIGN KEY (nationalID) REFERENCES Customer_profile(nationalID)
+    );
+
+    -- Table: Service_Plan
+    CREATE TABLE IF NOT EXISTS Service_Plan (
+        planID INT PRIMARY KEY,
+        SMS_offered INT,
+        minutes_offered INT,
+        data_offered INT,
+        name VARCHAR(50),
+        price INT,
+        description VARCHAR(50)
+    );
+
+    -- Table: Subscription
+    CREATE TABLE IF NOT EXISTS Subscription (
+        mobileNo CHAR(11),
+        planID INT,
+        subscription_date DATE,
+        status VARCHAR(50),
+        PRIMARY KEY (mobileNo, planID),
+        FOREIGN KEY (mobileNo)  REFERENCES Customer_Account(mobileNo),
+        FOREIGN KEY (planID) REFERENCES Service_Plan(planID)
+    );
+
+END $$
+
+DELIMITER ;
