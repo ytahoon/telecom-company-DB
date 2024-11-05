@@ -226,3 +226,10 @@ BEGIN
     DROP TABLE IF EXISTS Shop;
 
 END 
+
+CREATE PROCEDURE dropAllProceduresFunctionsViews()
+BEGIN
+
+END
+
+
