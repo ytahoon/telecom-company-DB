@@ -1,0 +1,19 @@
+CREATE PROCEDURE Account_Plan()
+BEGIN
+    
+    SELECT 
+        ca.mobileNo,
+        ca.account_type,
+        ca.status AS account_status,
+        sp.planID,
+        sp.name AS plan_name,
+        sp.price AS plan_price,
+        s.subscription_date,
+        s.status AS subscription_status
+    FROM 
+        Customer_Account ca
+    LEFT JOIN 
+        Subscription s ON ca.mobileNo = s.mobileNo
+    LEFT JOIN 
+        Service_Plan sp ON s.planID = sp.planID;
+END 
