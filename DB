@@ -232,4 +232,33 @@ BEGIN
 
 END
 
+DELIMITER $$
+
+CREATE PROCEDURE clearAllTables()
+BEGIN
+    
+    TRUNCATE TABLE Transfer_money;
+    TRUNCATE TABLE Points_Group;
+    TRUNCATE TABLE Cashback;
+    TRUNCATE TABLE Exclusive_Offer;
+    TRUNCATE TABLE Plan_Provides_Benefits;
+    TRUNCATE TABLE Benefits;
+    TRUNCATE TABLE Technical_Support_Ticket;
+    TRUNCATE TABLE Voucher;
+    TRUNCATE TABLE Plan_Usage;
+    TRUNCATE TABLE Subscription;
+    TRUNCATE TABLE Process_Payment;
+    TRUNCATE TABLE Payment;
+    TRUNCATE TABLE Wallet;
+    TRUNCATE TABLE Customer_Account;
+    TRUNCATE TABLE Service_Plan;
+    TRUNCATE TABLE Customer_profile;
+    TRUNCATE TABLE E_shop;
+    TRUNCATE TABLE Physical_Shop;
+    TRUNCATE TABLE Shop;
+
+    
+END 
+
+
 
