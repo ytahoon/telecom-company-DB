@@ -1,0 +1,20 @@
+CREATE PROCEDURE Unsubscribed_Plans(IN MobileNo CHAR(11))
+BEGIN
+    
+    SELECT 
+        sp.planID,
+        sp.name AS plan_name,
+        sp.price AS plan_price,
+        sp.SMS_offered,
+        sp.minutes_offered,
+        sp.data_offered,
+        sp.description
+    FROM 
+        Service_Plan sp
+    LEFT JOIN 
+        Subscription s ON sp.planID = s.planID AND s.mobileNo = MobileNo
+    WHERE 
+        s.mobileNo IS NULL; 
+END 
+
+
