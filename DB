@@ -15,10 +15,10 @@ BEGIN
         mobileNo CHAR(11) PRIMARY KEY,
         pass VARCHAR(50),
         balance DECIMAL(10, 1),
-        account_type VARCHAR(50),
+        account_type ENUM('Post Paid', 'Prepaid', 'Pay_as_you_go'),
         start_date DATE,
-        status VARCHAR(50),
-        point INT,
+        status ENUM('active', 'onhold'),
+        points INT DEFAULT 0,
         nationalID INT,
         FOREIGN KEY (nationalID) REFERENCES Customer_profile(nationalID)
     );
@@ -39,7 +39,7 @@ BEGIN
         mobileNo CHAR(11),
         planID INT,
         subscription_date DATE,
-        status VARCHAR(50),
+        status ENUM('active', 'onhold'),
         PRIMARY KEY (mobileNo, planID),
         FOREIGN KEY (mobileNo) REFERENCES Customer_Account(mobileNo),
         FOREIGN KEY (planID) REFERENCES Service_Plan(planID)
@@ -61,11 +61,11 @@ BEGIN
 
     
     CREATE TABLE IF NOT EXISTS Payment (
-        paymentID INT PRIMARY KEY,
+        paymentID INT IDENTITY(1,1) PRIMARY KEY,
         amount DECIMAL(10, 1),
         date_of_payment DATE,
-        payment_method VARCHAR(50),
-        status VARCHAR(50),
+        payment_method ENUM('cash', 'credit'),
+        status ENUM('successful', 'pending', 'rejected'),
         mobileNo CHAR(11),
         FOREIGN KEY (mobileNo) REFERENCES Customer_Account(mobileNo)
     );
@@ -192,14 +192,37 @@ BEGIN
 
     
     CREATE TABLE IF NOT EXISTS Technical_Support_Ticket (
-        ticketID INT PRIMARY KEY,
+        ticketID INT IDENTITY(1,1) PRIMARY KEY,
         mobileNo CHAR(11),
         Issue_description VARCHAR(50),
         priority_level INT,
-        status VARCHAR(50),
+        status ENUM('Open', 'In Progress', 'Resolved'),
         FOREIGN KEY (mobileNo) REFERENCES Customer_Account(mobileNo)
     );
+END
 
 
+CREATE PROCEDURE dropAllTables()
+BEGIN
+    
+    DROP TABLE IF EXISTS Transfer_money;
+    DROP TABLE IF EXISTS Points_Group;
+    DROP TABLE IF EXISTS Cashback;
+    DROP TABLE IF EXISTS Exclusive_Offer;
+    DROP TABLE IF EXISTS Plan_Provides_Benefits;
+    DROP TABLE IF EXISTS Benefits;
+    DROP TABLE IF EXISTS Technical_Support_Ticket;
+    DROP TABLE IF EXISTS Voucher;
+    DROP TABLE IF EXISTS Plan_Usage;
+    DROP TABLE IF EXISTS Subscription;
+    DROP TABLE IF EXISTS Payment;
+    DROP TABLE IF EXISTS Process_Payment;
+    DROP TABLE IF EXISTS Wallet;
+    DROP TABLE IF EXISTS Customer_Account;
+    DROP TABLE IF EXISTS Service_Plan;
+    DROP TABLE IF EXISTS Customer_profile;
+    DROP TABLE IF EXISTS E_shop;
+    DROP TABLE IF EXISTS Physical_Shop;
+    DROP TABLE IF EXISTS Shop;
 
 END 
