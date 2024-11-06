@@ -1,1 +1,42 @@
+CREATE VIEW allCustomerAccounts AS
+SELECT
+      cp.nationalID,cp.first_name,cp.last_name,
+      cp.email,cp.address,cp.date_of_birth,
+      ca.mobileNo,ca.account_type,ca.balance,
+      ca.start_date,ca.status,ca.point
+FROM
+      Customer_profile cp
+JOIN
+      Customer_Account ca ON cp.nationalID = ca.nationalID
+WHERE 
+      ca.status='active';
 
+
+
+CREATE VIEW allSevicePlans AS
+SELECT
+      planID,name,price,SMS_offered,minutes_offered,
+      data_offered,description
+FROM 
+     Service_Plan;
+
+
+
+CREATE VIEW allBenefits AS
+SELECT
+      benefitID,description,validity_date,status,mobileNo
+FROM
+      Benefits
+WHERE
+     status = 'active';
+
+
+
+CREATE VIEW AccountPayments AS
+SELECT
+      p.paymentID,p.amount,p.date_of_payment,p.payment_method,
+      p.status,ca.mobileNo,ca.account_type,ca.balance,ca.status,ca.point
+FROM
+     payment p
+JOIN
+     Customer_Account ca ON p.mobileNo = ca.mobileNo;
