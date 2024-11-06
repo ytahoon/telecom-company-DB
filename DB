@@ -72,11 +72,10 @@ BEGIN
 
     
     CREATE TABLE IF NOT EXISTS Process_Payment (
-        paymentID INT,
+        paymentID INT PRIMARY KEY,
         planID INT,
         remaining_balance DECIMAL(10, 1),
         extra_amount DECIMAL(10, 1),
-        PRIMARY KEY (paymentID, planID),
         FOREIGN KEY (paymentID) REFERENCES Payment(paymentID),
         FOREIGN KEY (planID) REFERENCES Service_Plan(planID)
     );
@@ -90,15 +89,16 @@ BEGIN
         nationalID INT,
         mobileNo CHAR(11),
         FOREIGN KEY (nationalID) REFERENCES Customer_profile(nationalID),
-        FOREIGN KEY (mobileNo) REFERENCES Customer_Account(mobileNo)
+    
     );
 
     CREATE TABLE IF NOT EXIST Transfer_money (
         walletID1 INT,
         walletID2 INT,
-        transfer_id INT PRIMARY KEY,
+        transfer_id INT ,
         amount DECIMAL(10, 2),
         transfer_date DATE,
+        PRIMARY KEY(walletID1,walletID2,transfer_id),
         FOREIGN KEY (walletID1) REFERENCES Wallet(walletID),
         FOREIGN KEY (walletID2) REFERENCES Wallet(walletID)
     );
@@ -115,31 +115,34 @@ BEGIN
 
     
     CREATE TABLE IF NOT EXISTS Points_Group (
-        pointID INT PRIMARY KEY,
+        pointID INT ,
         benefitID INT,
         pointsAmount INT,
         PaymentID INT,
+        PRIMARY KEY(pointID,benefitID),
         FOREIGN KEY (benefitID) REFERENCES Benefits(benefitID),
         FOREIGN KEY (PaymentID) REFERENCES Payment(paymentID)
     );
 
     
     CREATE TABLE IF NOT EXISTS Exclusive_Offer (
-        offerID INT PRIMARY KEY,
+        offerID INT ,
         benefitID INT,
         internet_offered INT,
         SMS_offered INT,
         minutes_offered INT,
+        PRIMARY KEY(offerID,benefitID),
         FOREIGN KEY (benefitID) REFERENCES Benefits(benefitID)
     );
 
     
     CREATE TABLE IF NOT EXISTS Cashback (
-        CashbackID INT PRIMARY KEY,
+        CashbackID INT ,
         benefitID INT,
         walletID INT,
         amount DECIMAL(10, 2),
         credit_date DATE,
+        PRIMARY KEY(CashbackID,benefitID),
         FOREIGN KEY (benefitID) REFERENCES Benefits(benefitID),
         FOREIGN KEY (walletID) REFERENCES Wallet(walletID)
     );
@@ -171,10 +174,9 @@ BEGIN
 
     
     CREATE TABLE IF NOT EXISTS E_shop (
-        shopID INT,
+        shopID INT PRIMARY KEY,
         URL VARCHAR(50),
         rating INT,
-        PRIMARY KEY (shopID),
         FOREIGN KEY (shopID) REFERENCES Shop(shopID)
     );
 
@@ -192,11 +194,12 @@ BEGIN
 
     
     CREATE TABLE IF NOT EXISTS Technical_Support_Ticket (
-        ticketID INT IDENTITY(1,1) PRIMARY KEY,
-        mobileNo CHAR(11),
+        ticketID INT IDENTITY(1,1) ,
+        mobileNo CHAR(11) ,
         Issue_description VARCHAR(50),
         priority_level INT,
         status ENUM('Open', 'In Progress', 'Resolved'),
+        PRIMARY KEY (ticketID, mobileNo),
         FOREIGN KEY (mobileNo) REFERENCES Customer_Account(mobileNo)
     );
 END
