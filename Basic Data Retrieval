@@ -42,7 +42,56 @@ JOIN
 CREATE VIEW allShops AS
 SELECT* FROM Shop ;
 
+
+
 CREATE VIEW allResolvedTickets AS
-SELECT*FROM Technical_Support_Ticket
+SELECT * FROM Technical_Support_Ticket
+WHERE status='Resolved';
+
+
+
+
+CREATE VIEW CustomerWallet AS
+SELECT 
+      w.walletID, w.current_balance, w.currency , w.last_modified_date , w.nationalID, w.mobileNo, cp.first_name, cp.last_name 
+FROM
+      Wallet w
+INNER JOIN
+      Customer_profile cp
+ON w.nationalID =cp.nationalID ;
+
+
+
+CREATE VIEW E_shopVouchers AS
+SELECT
+       s.shopID ,s.URL,s.rating,v.voucherID,v.value
+FROM
+       E_shop s
+INNER JOIN
+       Voucher v
+ON s.shopID = v.shopID
+
+WHERE v.redeem_date IS NOT NULL;
+
+
+
+CREATE VIEW PhysicalStoreVouchers AS
+SELECT
+       s.shopID ,s.address,s.working_hour.v.voucherID,v.value
+FROM
+       Physical_Shop s
+INNER JOIN
+       Voucher v
+ON s.shopID = v.shopID
+
+WHERE v.redeem_date IS NOT NULL;
+
+
+
+CREATE VIEW Num_of_cashback AS
+SELECT COUNT (CashbackID)
+FROM Cashback
+GROUP BY Cashback.walletID; 
+      
 
 
