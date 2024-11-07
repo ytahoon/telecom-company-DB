@@ -1,5 +1,5 @@
 CREATE PROCEDURE createAllTables()
-BEGIN
+AS
     
     CREATE TABLE IF NOT EXISTS Customer_profile (
         nationalID INT PRIMARY KEY,
@@ -217,11 +217,11 @@ BEGIN
         PRIMARY KEY (ticketID, mobileNo),
         FOREIGN KEY (mobileNo) REFERENCES Customer_Account(mobileNo)
     );
-END
+
 
 
 CREATE PROCEDURE dropAllTables()
-BEGIN
+AS
     
     DROP TABLE IF EXISTS Transfer_money;
     DROP TABLE IF EXISTS Points_Group;
