@@ -14,11 +14,7 @@ WHERE
 
 
 CREATE VIEW allSevicePlans AS
-SELECT
-      planID,name,price,SMS_offered,minutes_offered,
-      data_offered,description
-FROM 
-     Service_Plan;
+SELECT * FROM Service_Plan;
 
 
 
@@ -40,3 +36,13 @@ FROM
      payment p
 JOIN
      Customer_Account ca ON p.mobileNo = ca.mobileNo;
+
+
+
+CREATE VIEW allShops AS
+SELECT* FROM Shop ;
+
+CREATE VIEW allResolvedTickets AS
+SELECT*FROM Technical_Support_Ticket
+
+
