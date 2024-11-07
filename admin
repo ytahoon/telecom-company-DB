@@ -1,5 +1,5 @@
 CREATE PROCEDURE Account_Plan()
-BEGIN
+AS
     
     SELECT 
         ca.mobileNo,
@@ -16,4 +16,4 @@ BEGIN
         Subscription s ON ca.mobileNo = s.mobileNo
     LEFT JOIN 
         Service_Plan sp ON s.planID = sp.planID;
-END 
+
