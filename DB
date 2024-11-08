@@ -1,7 +1,11 @@
-CREATE PROCEDURE createAllTables()
+CREATE DATABASE Telecom_Team_Team_66;
+
+GO
+CREATE PROCEDURE createAllTables
 AS
+
     
-    CREATE TABLE IF NOT EXISTS Customer_profile (
+    CREATE TABLE Customer_profile (
         nationalID INT PRIMARY KEY,
         first_name VARCHAR(50),
         last_name VARCHAR(50),
@@ -17,7 +21,7 @@ AS
         CHECK(VALUE IN ('active', 'onhold')
     );
     
-    CREATE TABLE IF NOT EXISTS Customer_Account (
+    CREATE TABLE Customer_Account (
         mobileNo CHAR(11) PRIMARY KEY,
         pass VARCHAR(50),
         balance DECIMAL(10, 1),
@@ -30,7 +34,7 @@ AS
     );
 
     
-    CREATE TABLE IF NOT EXISTS Service_Plan (
+    CREATE TABLE Service_Plan (
         planID INT PRIMARY KEY,
         SMS_offered INT,
         minutes_offered INT,
@@ -43,7 +47,7 @@ AS
         CHECK(VALUE IN('active', 'onhold')
     );
     
-    CREATE TABLE IF NOT EXISTS Subscription (
+    CREATE TABLE Subscription (
         mobileNo CHAR(11),
         planID INT,
         subscription_date DATE,
@@ -54,7 +58,7 @@ AS
     );
 
     
-    CREATE TABLE IF NOT EXISTS Plan_Usage (
+    CREATE TABLE Plan_Usage (
         usageID INT PRIMARY KEY,
         start_date DATE,
         end_date DATE,
@@ -73,7 +77,7 @@ AS
      CREATE DOMAIN statusPay AS VARCHAR(50) 
         CHECK(VALUE IN('successful', 'pending', 'rejected')
     );
-    CREATE TABLE IF NOT EXISTS Payment (
+    CREATE TABLE  Payment (
         paymentID INT IDENTITY(1,1) PRIMARY KEY,
         amount DECIMAL(10, 1),
         date_of_payment DATE,
@@ -84,7 +88,7 @@ AS
     );
 
     
-    CREATE TABLE IF NOT EXISTS Process_Payment (
+    CREATE TABLE Process_Payment (
         paymentID INT PRIMARY KEY,
         planID INT,
         remaining_balance DECIMAL(10, 1),
@@ -94,7 +98,7 @@ AS
     );
 
     
-    CREATE TABLE IF NOT EXISTS Wallet (
+    CREATE TABLE  Wallet (
         walletID INT PRIMARY KEY,
         current_balance DECIMAL(10, 2),
         currency VARCHAR(50),
@@ -105,7 +109,7 @@ AS
     
     );
 
-    CREATE TABLE IF NOT EXIST Transfer_money (
+    CREATE TABLE Transfer_money (
         walletID1 INT,
         walletID2 INT,
         transfer_id INT ,
@@ -117,7 +121,7 @@ AS
     );
 
     
-    CREATE TABLE IF NOT EXISTS Benefits (
+    CREATE TABLE  Benefits (
         benefitID INT PRIMARY KEY,
         description VARCHAR(50),
         validity_date DATE,
@@ -127,7 +131,7 @@ AS
     );
 
     
-    CREATE TABLE IF NOT EXISTS Points_Group (
+    CREATE TABLE  Points_Group (
         pointID INT ,
         benefitID INT,
         pointsAmount INT,
@@ -138,7 +142,7 @@ AS
     );
 
     
-    CREATE TABLE IF NOT EXISTS Exclusive_Offer (
+    CREATE TABLE  Exclusive_Offer (
         offerID INT ,
         benefitID INT,
         internet_offered INT,
@@ -149,7 +153,7 @@ AS
     );
 
     
-    CREATE TABLE IF NOT EXISTS Cashback (
+    CREATE TABLE  Cashback (
         CashbackID INT ,
         benefitID INT,
         walletID INT,
@@ -161,7 +165,7 @@ AS
     );
 
     
-    CREATE TABLE IF NOT EXISTS Plan_Provides_Benefits (
+    CREATE TABLE  Plan_Provides_Benefits (
         benefitID INT,
         planID INT,
         PRIMARY KEY (benefitID, planID),
@@ -170,14 +174,14 @@ AS
     );
 
     
-    CREATE TABLE IF NOT EXISTS Shop (
+    CREATE TABLE  Shop (
         shopID INT PRIMARY KEY,
         name VARCHAR(50),
         category VARCHAR(50)
     );
 
     
-    CREATE TABLE IF NOT EXISTS Physical_Shop (
+    CREATE TABLE  Physical_Shop (
         shopID INT,
         address VARCHAR(50),
         working_hours VARCHAR(50),
@@ -186,14 +190,14 @@ AS
     );
 
     
-    CREATE TABLE IF NOT EXISTS E_shop (
+    CREATE TABLE  E_shop (
         shopID INT PRIMARY KEY,
         URL VARCHAR(50),
         rating INT,
         FOREIGN KEY (shopID) REFERENCES Shop(shopID)
     );
 
-    CREATE TABLE IF NOT EXISTS Voucher (
+    CREATE TABLE  Voucher (
         voucherID INT PRIMARY KEY,
         value INT,
         expiry_date DATE,
@@ -208,7 +212,7 @@ AS
     CREATE DOMAIN statusTECH AS
         CHECK(VALUE IN('Open', 'In Progress', 'Resolved')
     );
-    CREATE TABLE IF NOT EXISTS Technical_Support_Ticket (
+    CREATE TABLE  Technical_Support_Ticket (
         ticketID INT IDENTITY(1,1) ,
         mobileNo CHAR(11) ,
         Issue_description VARCHAR(50),
@@ -219,9 +223,13 @@ AS
     );
 
 
+    
 
-CREATE PROCEDURE dropAllTables()
+
+GO
+CREATE PROCEDURE dropAllTables
 AS
+
     
     DROP TABLE IF EXISTS Transfer_money;
     DROP TABLE IF EXISTS Points_Group;
@@ -242,18 +250,18 @@ AS
     DROP TABLE IF EXISTS E_shop;
     DROP TABLE IF EXISTS Physical_Shop;
     DROP TABLE IF EXISTS Shop;
-
-END 
-
-CREATE PROCEDURE dropAllProceduresFunctionsViews()
-BEGIN
-
-END
+   
 
 
+--CREATE PROCEDURE dropAllProceduresFunctionsViews()
+--BEGIN
 
-CREATE PROCEDURE clearAllTables()
-BEGIN
+--END
+
+
+GO
+CREATE PROCEDURE clearAllTables
+AS
     
     TRUNCATE TABLE Transfer_money;
     TRUNCATE TABLE Points_Group;
@@ -276,7 +284,3 @@ BEGIN
     TRUNCATE TABLE Shop;
 
     
-END 
-
-
-
